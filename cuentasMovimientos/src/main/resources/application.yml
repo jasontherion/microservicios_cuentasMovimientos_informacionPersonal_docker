@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: cuentasMovimientos
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=utf8
+    username: postgres
+    password: postgres
+    driver-classname: org.postgresql.Driver
+    hikari:
+      pool-size: 10
+      connection-timeout: 20000
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+      ddl-auto: update
+
+  server.port: 8021
+

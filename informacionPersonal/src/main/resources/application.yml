@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: informacionPersonal
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=utf8
+    username: postgres
+    password: postgres
+    driver-classname: org.postgresql.Driver
+    hikari:
+      pool-size: 10 # Adjust pool size as needed
+      connection-timeout: 20000 # Adjust timeout as needed
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+      ddl-auto: update
+  docker:
+    compose:
+      base-dir: "./"  # Directorio base donde se encuentra la carpeta "docker"
+      file: "docker/docker-compose.yml"
+
+server.port: 8022
+
+server:
+  context-path: /clientes
+  servlet:
+    context-path: /clientes
