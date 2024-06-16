@@ -1,22 +1,20 @@
 package com.microservicio.cuentasMovimientos.cuentasMovimientos.service.entidad;
 
 import com.microservicio.cuentasMovimientos.cuentasMovimientos.dto.EntidadDTO;
-import com.microservicio.cuentasMovimientos.cuentasMovimientos.dto.MovimientoDTO;
+import com.microservicio.cuentasMovimientos.cuentasMovimientos.dto.RespuestaDTO;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface IEntidadService {
 
-    ResponseEntity<List<EntidadDTO>> listarEntidades();
+    ResponseEntity<RespuestaDTO> listarEntidades();
 
     ResponseEntity<EntidadDTO> consultarEntidadId(Long id);
 
-    ResponseEntity<String> crearEntidad(EntidadDTO entidadDTO);
+    ResponseEntity<RespuestaDTO>crearEntidad(EntidadDTO entidadDTO);
 
-    ResponseEntity<String> actualizarEntidad(Long id, EntidadDTO entidadDTO);
+    ResponseEntity<RespuestaDTO> actualizarEntidad(Long id, EntidadDTO entidadDTO);
 
-    ResponseEntity<String> eliminarEntidad(Long id);
+    ResponseEntity<RespuestaDTO> eliminarEntidad(Long id);
 
 
 }

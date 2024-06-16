@@ -1,2 +1,10 @@
-package com.microservicio.cuentasMovimientos.cuentasMovimientos.service.reporte;public interface IReporteService {
+package com.microservicio.cuentasMovimientos.cuentasMovimientos.service.reporte;
+
+import com.microservicio.cuentasMovimientos.cuentasMovimientos.dto.RangoFechaDTO;
+import com.microservicio.cuentasMovimientos.cuentasMovimientos.dto.RespuestaDTO;
+import org.springframework.http.ResponseEntity;
+
+public interface IReporteService {
+
+    ResponseEntity<RespuestaDTO> reportes(RangoFechaDTO rangoFechaDTO, Long clienteId);
 }

@@ -19,7 +19,7 @@ public class Clientes  implements Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CLIENTE_ID")
     private Long clienteId;
 

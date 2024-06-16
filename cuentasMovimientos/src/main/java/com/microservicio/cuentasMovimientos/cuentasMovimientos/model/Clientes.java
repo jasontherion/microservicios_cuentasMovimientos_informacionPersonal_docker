@@ -1,6 +1,5 @@
 package com.microservicio.cuentasMovimientos.cuentasMovimientos.model;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +12,8 @@ public class Clientes {
     private String contrasenia;
 
     private Boolean estado;
+
+    private Persona persona;
+
+
 }

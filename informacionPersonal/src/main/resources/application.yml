@@ -8,7 +8,7 @@ spring:
     driver-classname: org.postgresql.Driver
     hikari:
       pool-size: 10 # Adjust pool size as needed
-      connection-timeout: 20000 # Adjust timeout as needed
+      connection-timeout: 60000 # Adjust timeout as needed
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect

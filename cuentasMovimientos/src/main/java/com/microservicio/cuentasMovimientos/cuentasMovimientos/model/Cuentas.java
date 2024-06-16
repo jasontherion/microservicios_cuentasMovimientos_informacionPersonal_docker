@@ -3,6 +3,7 @@ package com.microservicio.cuentasMovimientos.cuentasMovimientos.model;
 import com.microservicio.cuentasMovimientos.cuentasMovimientos.Enum.TiposCuentasEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,8 +21,8 @@ import java.util.List;
 public class Cuentas implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long cuentasId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cuentaId;
 
     @Column(name = "NUMERO_CUENTA")
     private String numeroCuenta;
@@ -34,12 +37,15 @@ public class Cuentas implements Serializable {
     @Column(name = "ESTADO")
     private Boolean estado;
 
-    @ManyToOne
+    @Column(name = "CLIENTE_ID")
+    private Long clienteId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ENTIDAD_ID")
     private Entidades entidad;
 
 
-    @OneToMany(mappedBy = "cuentas")
+    @OneToMany(mappedBy = "cuentas", fetch = FetchType.LAZY)
     private List<Movimientos> movimientos = new ArrayList<>();
 
 

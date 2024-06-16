@@ -12,10 +12,17 @@ import org.mapstruct.MappingTarget;
 public interface IClientePersonaMapper {
 
     @Mapping(target = "clienteId", ignore = true) // Ignoramos el ID al crear un nuevo cliente
+    @Mapping(source = "clienteContenedorDTO.clientesDto.contrasenia", target = "contrasenia")
+    @Mapping(source = "clienteContenedorDTO.clientesDto.estado", target = "estado")
     @Mapping(source = "clienteContenedorDTO.personasDto", target = "personas")
     Clientes clienteContenedorDTOAClientes(ClienteContenedorDTO clienteContenedorDTO);
 
     @Mapping(target = "clienteId", ignore = true) // Ignoramos el ID al crear un nuevo cliente
+    @Mapping(source = "clienteContenedorDTO.clientesDto.contrasenia", target = "contrasenia")
+    @Mapping(source = "clienteContenedorDTO.clientesDto.estado", target = "estado")
     @Mapping(source = "clienteContenedorDTO.personasDto", target = "personas")
-    void actualizarClientePersonaDTO(ClienteContenedorDTO clienteContenedorDTO, @MappingTarget Clientes clientes);
+    Clientes actualizarClientePersonaDTO(ClienteContenedorDTO clienteContenedorDTO, @MappingTarget Clientes clientes);
+
+
+
 }

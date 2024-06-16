@@ -1,13 +1,11 @@
 package com.microservicio.informacionPersonal.informacionPersonal.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class ClientesDTO {
@@ -18,4 +16,6 @@ public class ClientesDTO {
 
 
     private Boolean estado;
+
+    private PersonasDTO persona;
 }

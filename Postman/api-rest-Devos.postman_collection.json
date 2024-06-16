@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "c0431a5f-6ecc-4667-80b0-7874827f58ec",
+		"name": "api-rest-dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "725580"
+	},
+	"item": [
+		{
+			"name": "informacion-personal",
+			"item": [
+				{
+					"name": "Listar_clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/clientes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear_clientes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientesDto\": {\n    \"contrasenia\": \"contraseñaSegura123\",\n    \"estado\": true\n  },\n  \"personasDto\": {\n    \"nombre\": \"Ana Maria Gomez\",\n    \"genero\": \"F\",\n    \"edad\": 30,\n    \"identificacion\": \"999999999\",\n    \"direccion\": \"Calle Nueva 567\",\n    \"telefono\": \"555-123-4567\"\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/clientes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar_clientes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientesDto\": {\n    \"contrasenia\": \"nuevaContraseña456\",  \n    \"estado\": false  \n  },\n  \"personasDto\": {  \n    \"nombre\": \"Ana Maria Gomez Lopez 2\",  \n    \"genero\": \"F\",\n    \"edad\": 42,\n    \"identificacion\": \"999999999\", \n    \"direccion\": \"Avenida Principal 890\", \n    \"telefono\": \"555-987-6543\" \n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/clientes/actualizar/{{clienteId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clientes",
+								"actualizar",
+								"{{clienteId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultar_cliente_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/clientes/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clientes",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "desabilitar_cliente",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"estado\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/clientes/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "movimientos-cuentas",
+			"item": [
+				{
+					"name": "Entidades",
+					"item": [
+						{
+							"name": "buscar_entidad_id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_cuentas}}/entidades/buscar/{{entidadId}}",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"entidades",
+										"buscar",
+										"{{entidadId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminar_entidad",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url_cuentas}}/entidades/eliminar/{{entidadId}}",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"entidades",
+										"eliminar",
+										"{{entidadId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar_entidad",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nombre\":\"Banco actualizado\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_cuentas}}/entidades/actualizar/{{entidadId}}",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"entidades",
+										"actualizar",
+										"{{entidadId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "crear_entidades",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nombre\":\"Crear Banco\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_cuentas}}/entidades/crear",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"entidades",
+										"crear"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar_entidades",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_cuentas}}/entidades/listar",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"entidades",
+										"listar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Movimentos",
+					"item": [
+						{
+							"name": "buscar_movimiento_id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_cuentas}}/movimientos/buscar/{{id}}",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"movimientos",
+										"buscar",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar_movimientos",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fecha\": \"2024-06-14\",\n  \"tipoMovimiento\": \"DEPOSITO\",\n  \"valor\": 500.0,\n  \"saldo\": 1500.0,\n  \"entidad\": {\n    \"entidadId\": 1\n  },\n  \"cuenta\": {\n    \"cuentasId\": 456\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_cuentas}}/movimientos/{{cuentaId}}",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"movimientos",
+										"{{cuentaId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "crear_movimientos",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fecha\": \"2024-06-14\",\n  \"tipoMovimiento\": \"DEPOSITO\",\n  \"valor\": 500.0,\n  \"saldo\": 3000.5,\n  \"entidad\": {\n    \"entidadId\": 2\n  },\n  \"cuenta\": {\n    \"cuentaId\": 1,\n    \"numeroCuenta\":\"10120202\"\n  }\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_cuentas}}/movimientos/crear",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"movimientos",
+										"crear"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar_movimientos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_cuentas}}/movimientos/listar",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"movimientos",
+										"listar"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cuentas",
+					"item": [
+						{
+							"name": "buscar_cuentas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_cuentas}}/cuentas/buscar/{{id}}",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"cuentas",
+										"buscar",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar_cuentas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_cuentas}}/cuentas",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"cuentas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "crear_cuentas",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\n  \"numeroCuenta\": \"1234567890\",\n  \"tipo\": \"AHORROS\",\n  \"saldoInicial\": 1000.50,\n  \"estado\": true,\n  \"entidadId\": 2,\n  \"clienteId\":2\n\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_cuentas}}/cuentas/crear",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"cuentas",
+										"crear"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "actualizar_cuentas",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\n  \"numeroCuenta\": \"1234567890\",\n  \"tipo\": \"AHORROS\",\n  \"saldoInicial\": 1000.50,\n  \"estado\": true,\n  \"entidad\": {\n    \"entidadId\": 2\n    \n  }\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_cuentas}}/cuentas/{{id}}",
+									"host": [
+										"{{url_cuentas}}"
+									],
+									"path": [
+										"cuentas",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Reporte_Movimientos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_cuentas}}/reportes?fechaInicial=2024-01-01&fechaFinal=2024-06-16&clienteId=1",
+							"host": [
+								"{{url_cuentas}}"
+							],
+							"path": [
+								"reportes"
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "2024-01-01"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "2024-06-16"
+								},
+								{
+									"key": "clienteId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

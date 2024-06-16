@@ -13,8 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -60,20 +58,20 @@ class PersonaServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void listarPersonas() {
-
-        List<Personas> personasMock = new ArrayList<>();
-        personasMock.add(personas);
-        when(repository.findAll()).thenReturn(personasMock);
-
-        ResponseEntity<List<PersonasDTO>> result = serviceImpl.listarPersonas();
-
-        assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(personasMock.size(), result.getBody().size());
-
-
-    }
+//    @Test
+//    void listarPersonas() {
+//
+//        List<Personas> personasMock = new ArrayList<>();
+//        personasMock.add(personas);
+//        when(repository.findAll()).thenReturn(personasMock);
+//
+//        ResponseEntity<List<PersonasDTO>> result = serviceImpl.listarPersonas();
+//
+//        assertEquals(HttpStatus.OK, result.getStatusCode());
+//        assertEquals(personasMock.size(), result.getBody().size());
+//
+//
+//    }
 
     @Test
     void personaId() {

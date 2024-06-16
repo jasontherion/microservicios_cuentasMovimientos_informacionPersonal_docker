@@ -1,25 +1,19 @@
 package com.microservicio.cuentasMovimientos.cuentasMovimientos.dto;
 
 
-import com.microservicio.cuentasMovimientos.cuentasMovimientos.Enum.TiposCuentasEnum;
-import com.microservicio.cuentasMovimientos.cuentasMovimientos.model.Entidades;
-import com.microservicio.cuentasMovimientos.cuentasMovimientos.model.Movimientos;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.microservicio.cuentasMovimientos.cuentasMovimientos.model.Clientes;
+import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class CuentaDTO {
 
-    private Long cuentasId;
+    private Long cuentaId;
 
     private String numeroCuenta;
 
@@ -29,7 +23,9 @@ public class CuentaDTO {
 
     private Boolean estado;
 
-    private Entidades entidad;
+    private EntidadDTO entidad;
 
     private List<MovimientoDTO> movimientos;
+
+    private Clientes clientes;
 }

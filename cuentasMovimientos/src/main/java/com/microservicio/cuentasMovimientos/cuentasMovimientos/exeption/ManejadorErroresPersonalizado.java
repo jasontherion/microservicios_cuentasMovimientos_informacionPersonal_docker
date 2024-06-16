@@ -1,5 +1,6 @@
 package com.microservicio.cuentasMovimientos.cuentasMovimientos.exeption;
 
+import com.microservicio.cuentasMovimientos.cuentasMovimientos.utilidades.ConstatesMesajes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,6 +38,15 @@ public class ManejadorErroresPersonalizado {
         Map<String, Object> response = new HashMap<>();
         response.put("error", "Parámetro inválido");
         response.put("mensaje", "El parámetro '" + ex.getName() + "' no es válido.");
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SaldoInsuficienteException.class)
+    public ResponseEntity<Map<String, Object>>  handleSaldoInsuficienteException(SaldoInsuficienteException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", ConstatesMesajes.SALDO_INSUFICIENTE);
+        response.put("mensaje", ex.getMessage());
         response.put("status", HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

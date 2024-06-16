@@ -4,12 +4,15 @@ package com.microservicio.cuentasMovimientos.cuentasMovimientos.model;
 import com.microservicio.cuentasMovimientos.cuentasMovimientos.Enum.TipoMovimientoEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,7 +21,7 @@ import java.time.LocalDate;
 public class Movimientos implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movimentoId;
 
     @Column(name = "FECHA")
@@ -34,11 +37,11 @@ public class Movimientos implements Serializable {
     @Column(name = "SALDO")
     private Float saldo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ENTIDAD_ID")
     private Entidades entidad;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUENTA_ID")
     private Cuentas cuentas;
 

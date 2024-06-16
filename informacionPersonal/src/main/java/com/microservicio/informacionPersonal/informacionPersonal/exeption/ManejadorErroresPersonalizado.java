@@ -24,8 +24,8 @@ public class ManejadorErroresPersonalizado {
         return new ResponseEntity<>(response, HttpStatus.LOCKED);
     }
 
-    @ExceptionHandler(RuntimeException.class) // Excepción general para errores 500
-    public ResponseEntity<Map<String, Object>> handleGeneralException(RuntimeException ex) {
+    @ExceptionHandler(Exception.class) // Excepción general para errores 500
+    public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
         Map<String, Object> response = new HashMap<>();
         response.put("error", "Error interno del servidor");
         response.put("mensaje", ex.getMessage());
