@@ -22,7 +22,7 @@ public class FakeDataGenerator {
             CuentaDTO cuenta = CuentaDTO.builder()
                     .cuentaId((long) i + 1)
                     .numeroCuenta(faker.finance().creditCard())
-                    .tipo(faker.options().option("Ahorros", "Corriente"))
+                    .tipo(faker.options().option("AHORROS", "CORRIENTE"))
                     .saldoInicial(faker.number().randomNumber(5, true) / 100.0f)
                     .estado(faker.bool().bool())
                     .entidad(createFakeEntidadDTO())
