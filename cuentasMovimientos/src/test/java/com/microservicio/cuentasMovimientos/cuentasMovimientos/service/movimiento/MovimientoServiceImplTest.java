@@ -1,5 +1,6 @@
 package com.microservicio.cuentasMovimientos.cuentasMovimientos.service.movimiento;
 
+import com.microservicio.cuentasMovimientos.cuentasMovimientos.Enum.TipoMovimientoEnum;
 import com.microservicio.cuentasMovimientos.cuentasMovimientos.Enum.TiposCuentasEnum;
 import com.microservicio.cuentasMovimientos.cuentasMovimientos.dto.CuentaDTO;
 import com.microservicio.cuentasMovimientos.cuentasMovimientos.dto.EntidadDTO;
@@ -35,6 +36,8 @@ class MovimientoServiceImplTest {
 
     @Mock
     ICuentaMapper cuentaMapper;
+    @Mock
+    TipoMovimientoEnum tipoMovimientoEnum;
 
     @Mock
     IMovimeintoMapper movimeintoMapper;
@@ -55,37 +58,43 @@ class MovimientoServiceImplTest {
     }
 
 
-//    @Test
-//    void crearMovimiento() {
-//        List<Movimientos> movimientos = new ArrayList<>();
-//
-//        CuentaDTO  cuentaTestDTO = cuentasDTO.get(0);
-//        MovimientoDTO movimientoDTO = cuentasDTO.get(0).getMovimientos().get(0);
-//        EntidadDTO entidadDTO = cuentasDTO.get(0).getEntidad();
-//        movimientoDTO.setCuenta(cuentaTestDTO);
-//        movimientoDTO.setEntidad(entidadDTO);
-//
-//
-//        movimientos.add(Movimientos.builder()
-//                                   .movimentoId(movimientoDTO.getMovimentoId())
-//                                   .valor(200.00F)
-//                                   .build());
-//        Cuentas cuentasTest = Cuentas.builder()
-//                                    .cuentaId(cuentaTestDTO.getCuentaId())
-//                                    .movimientos(movimientos)
-//                                    .saldoInicial(100000.00F)
-//                .numeroCuenta(cuentaTestDTO.getNumeroCuenta())
-//                .tipo(TiposCuentasEnum.AHORROS)
-//                .estado(true)
-//                                    .build();
-//
-//        when(cuentaMapper.cuentasDtoACuenta(cuentaTestDTO)).thenReturn(cuentasTest);
-//        when(cuentaRepository.findById(cuentaTestDTO.getCuentaId())).thenReturn(Optional.ofNullable(cuentasTest));
-//        when(repositoryMovimientos.save(movimeintoMapper.movimientosDtoAMovimientos(movimientoDTO))).thenReturn(movimientos.get(0));
-//
-//        ResponseEntity<RespuestaDTO> resultado = movimientoService.crearMovimiento(movimientoDTO);
-//
-//        assertEquals(HttpStatus.OK, resultado.getStatusCode());
-//
-//    }
+    @Test
+    void crearMovimiento() {
+        List<Movimientos> movimientos = new ArrayList<>();
+
+        CuentaDTO  cuentaTestDTO = cuentasDTO.get(0);
+        MovimientoDTO movimientoDTO = cuentasDTO.get(0).getMovimientos().get(0);
+        EntidadDTO entidadDTO = cuentasDTO.get(0).getEntidad();
+        movimientoDTO.setCuenta(cuentaTestDTO);
+        movimientoDTO.setEntidad(entidadDTO);
+
+
+        movimientos.add(Movimientos.builder()
+                                   .movimentoId(movimientoDTO.getMovimentoId())
+                                   .valor(200.00F)
+                                   .saldo(800.00F)
+                                   .tipoMovimiento(TipoMovimientoEnum.valueOf(movimientoDTO.getTipoMovimiento()))
+                                   .cuentas(Cuentas.builder().cuentaId(cuentaTestDTO.getCuentaId()).build())
+                                   .build());
+        Cuentas cuentasTest = Cuentas.builder()
+                                    .cuentaId(cuentaTestDTO.getCuentaId())
+                                    .movimientos(movimientos)
+                                    .saldoInicial(100000.00F)
+                                    .clienteId(1L)
+                                    .numeroCuenta(cuentaTestDTO.getNumeroCuenta())
+                                    .tipo(TiposCuentasEnum.valueOf(cuentaTestDTO.getTipo()))
+                                    .estado(true)
+                                    .build();
+
+        when(cuentaMapper.cuentasDtoACuenta(cuentaTestDTO)).thenReturn(cuentasTest);
+        when(movimeintoMapper.movimientosDtoAMovimientos(movimientoDTO)).thenReturn( movimientos.get(0));
+        when(cuentaRepository.findById(cuentaTestDTO.getCuentaId())).thenReturn(Optional.ofNullable(cuentasTest));
+        when(cuentaRepository.save(cuentasTest)).thenReturn(cuentasTest);
+        when(repositoryMovimientos.save(movimeintoMapper.movimientosDtoAMovimientos(movimientoDTO))).thenReturn(movimientos.get(0));
+
+        ResponseEntity<RespuestaDTO> resultado = movimientoService.crearMovimiento(movimientoDTO);
+
+        assertEquals(HttpStatus.OK, resultado.getStatusCode());
+
+    }
 }

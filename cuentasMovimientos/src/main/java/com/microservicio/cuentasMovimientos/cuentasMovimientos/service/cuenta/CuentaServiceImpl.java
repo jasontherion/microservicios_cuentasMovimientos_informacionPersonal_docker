@@ -83,7 +83,7 @@ public class CuentaServiceImpl implements ICuentaService {
     }
 
     /**
-     * @param cuentaDTO
+     * @param creacionDTO
      * @return
      */
     @Transactional
@@ -91,9 +91,12 @@ public class CuentaServiceImpl implements ICuentaService {
     public ResponseEntity<RespuestaDTO> crearCuenta(CuentaCreacionDTO creacionDTO) {
         try{
             //Validamos la existencia del cliente enviado
-            if(clienteFeign.detalle(creacionDTO.getClienteId()).getStatusCode().equals(HttpStatus.OK)) throw new NoSuchElementException(String.format(ConstatesMesajes.CLIENTE_NO_EXISTE,creacionDTO.getClienteId()));
+            if(clienteFeign.detalle(creacionDTO.getClienteId()).getStatusCode() != HttpStatus.OK) throw new NoSuchElementException(String.format(ConstatesMesajes.CLIENTE_NO_EXISTE,creacionDTO.getClienteId()));
             repository.save(mapper.cuentasDtoACuentaCreacion(creacionDTO));
             return new ResponseEntity<>(RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.CREACION,ModulosEnum.CUENTAS)).build(), HttpStatus.CREATED);
+        }catch (NoSuchElementException e){
+            log.error("Error en consultar Entidad id " + e);
+            throw  new NoSuchElementException(e.getMessage());
         }catch (Exception e){
             log.error("Error en crear Cuentas " + e);
             throw  new RuntimeException(String.format(ConstatesMesajes.ERROR_SERVIDOR, ModulosEnum.CUENTAS));

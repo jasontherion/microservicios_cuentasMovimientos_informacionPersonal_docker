@@ -21,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Slf4j
@@ -91,7 +92,7 @@ public class MovimientoServiceImpl implements  IMovimientoService{
     public ResponseEntity<RespuestaDTO> crearMovimiento(MovimientoDTO movimientoDTO) {
         try{
 
-         Cuentas  cuenta =  cuentaRepository.findById(movimientoDTO.getCuenta().getCuentaId())
+         Cuentas cuenta =  cuentaRepository.findById(movimientoDTO.getCuenta().getCuentaId())
                     .filter(c -> Boolean.TRUE.equals(c.getEstado()))
                     .map(c -> {
                         float saldoDisponible = c.getSaldoInicial();

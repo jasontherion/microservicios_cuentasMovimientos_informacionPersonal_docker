@@ -49,7 +49,7 @@ public class FakeDataGenerator {
             MovimientoDTO movimiento = MovimientoDTO.builder()
                     .movimentoId(faker.number().randomNumber(5, true))
                     .fecha(LocalDate.now().minusDays(faker.number().numberBetween(0, 30)))
-                    .tipoMovimiento(faker.options().option("Deposito", "Retiro"))
+                    .tipoMovimiento(faker.options().option("DEPOSITO", "RETIRO"))
                     .valor(faker.number().randomNumber(5, true) / 100.0f)
                     .saldo(faker.number().randomNumber(5, true) / 100.0f)
                     .entidad(createFakeEntidadDTO()) // Referencia a la entidad ficticia

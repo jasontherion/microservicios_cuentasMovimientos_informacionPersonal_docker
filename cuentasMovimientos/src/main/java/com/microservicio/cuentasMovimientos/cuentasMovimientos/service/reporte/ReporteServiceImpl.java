@@ -18,8 +18,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @AllArgsConstructor
@@ -48,6 +50,9 @@ public class ReporteServiceImpl implements IReporteService{
                 reporte.setCliente(cliente.getPersona().getNombre());
             });
             return new ResponseEntity<>(RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.LISTAR_REGISTROS, ModulosEnum.REPORTE)).data(reportes).build(), HttpStatus.OK);
+        }catch (NoSuchElementException e){
+            log.error("Error en reporte " + e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(ConstatesMesajes.ERROR_NO_REGISTROS), e);
         }catch (Exception e){
             log.error("Error en reporte " + e);
             throw  new RuntimeException(String.format(ConstatesMesajes.ERROR_SERVIDOR, ModulosEnum.REPORTE));
