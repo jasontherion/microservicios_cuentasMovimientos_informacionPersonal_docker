@@ -96,4 +96,4 @@ postgres
 dev.tooayandadocker-compose-deploy-a-containerized-php-application-52ll
 [2] Docker Compose overview. Docker Compose is a tool that… | by Meghasharmaa | Apr, 2024 | Medium
 
-Author: Jeyson G Correa Martinez
+#Author: Jeyson G Correa Martinez
