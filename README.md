@@ -61,3 +61,39 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     profiles:
       - core
+
+## Instalación
+Para implementar esta aplicación usando Docker Compose, siga estos pasos: [1]
+
+**Asegúrese de que Docker y Docker Compose estén instalados**: asegúrese de tener Docker y Docker Compose instalados en su máquina. Puede descargarlos desde el sitio web oficial de Docker (https://www.docker.com/get-started).
+**Navegue hasta el directorio que contiene el archivo Docker Compose**: abra una terminal o símbolo del sistema y navegue hasta el directorio docker donde se encuentra el archivo `docker-compose.yml`.
+**Cree las imágenes de Docker**: antes de ejecutar la aplicación, debe crear las imágenes de Docker para cada servicio. Puedes hacer esto ejecutando el siguiente comando:
+- docker-compose build
+
+Este comando creará las imágenes de Docker para todos los servicios definidos en el
+docker-compose.yml
+ archivo, incluyendo
+informacion-personal
+ y
+cuentas-movimientos
+  ademas de
+postgres
+
+.
+
+**Inicie los servicios de Docker Compose**: una vez creadas las imágenes, puede iniciar los servicios ejecutando el siguiente comando:
+
+- docker-compose  --profile core up
+
+
+**Verificar el estado de los servicios**: Puede verificar el estado de los servicios en ejecución ejecutando el siguiente comando:
+- docker-compose ps
+
+**Detener los servicios**: cuando haya terminado de usar la aplicación, puede detener los servicios ejecutando el siguiente comando:
+- docker-compose  --profile core down
+
+[1] Docker Compose: Deploy a Containerized Application - DEV Community
+dev.tooayandadocker-compose-deploy-a-containerized-php-application-52ll
+[2] Docker Compose overview. Docker Compose is a tool that… | by Meghasharmaa | Apr, 2024 | Medium
+
+Author: Jeyson G Correa Martinez
