@@ -22,7 +22,6 @@ spring:
       base-dir: "./"  # Directorio base donde se encuentra la carpeta "docker"
       file: "docker/docker-compose.yml"
 
-server.port: 8022
 
 server:
   context-path: /clientes
