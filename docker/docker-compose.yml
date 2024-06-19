@@ -2,22 +2,31 @@
 
 networks:
   app-network:
+    name: banca_network
+    driver: bridge # se asigna este porque es dinamico al generar las ip para varios servicios existe host=> solo para un servicio
+    ipam:
+      driver: default
+
 
 services:
-
   postgres:
     image: postgres:13.2
     container_name: "postgres"
     environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?useUnicode=true&characterEncoding=utf8 # Conectar a la base de datos en el contenedor 'postgres'
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
-    volumes:
-      - ../informacionPersonal/src/main/resources/db/BaseDatos.sql:/docker-entrypoint-initdb.d/BaseDatos.sql # Copiar el script SQL
     profiles:
       - core
+    volumes:
+      - ../db/BaseDatos.sql:/docker-entrypoint-initdb.d/BaseDatos.sql # Copiar el script SQL
+    networks:
+      app-network:
+        aliases:
+          - banca_network_db
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 10s
@@ -28,6 +37,8 @@ services:
     build: ../informacionPersonal # Ruta al Dockerfile del microservicio informacionPersonal
     ports:
       - "8022:8022" # Mapeo el puerto del contenedor al host
+    container_name: artefacto_informacion_personal
+    restart: always # se reinicia siempre que alla un fallo en el contenedor tambien posee "no", "on-failure"=> si hay falla resetea,  "unless-stop=> siempre exepto cuando se reinicia manualmente"
     depends_on: # Esperar a que la base de datos esté lista antes de iniciar
       - postgres
     environment:
@@ -36,11 +47,15 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     profiles:
       - core
+    networks:
+      app-network:
+        aliases:
+          - banca_network_clientes
 
   cuentas-movimientos:
     build: ../cuentasMovimientos # Ruta al Dockerfile del microservicio cuentasMovimientos
     ports:
-      - "8021:8080" # Mapeo el puerto del contenedor al host
+      - "8121:8080" # Mapeo el puerto del contenedor al host
     depends_on:
       - postgres
       - informacion-personal
@@ -48,5 +63,36 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?useUnicode=true&characterEncoding=utf8 # Conectar a la base de datos en el contenedor 'postgres'
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      CLIENTES_ALIAS: banca_network_clientes
     profiles:
       - core
+    networks:
+      app-network:
+        aliases:
+          - banca_network_cuentas
+
+#  zookeeper:
+#    image: wurstmeister/zookeeper
+#    container_name: zookeeper
+#    ports:
+#      - "2181:2181"
+#    profiles:
+#      - core
+#
+#  kafka:
+#    image: wurstmeister/kafka:latest
+#    container_name: kafka
+#    environment:
+#      KAFKA_MESSAGE_MAX_BYTES: 32768
+#      KAFKA_CREATE_TOPICS: "account-domain-event,book-domain-event,search-preference-domain-event"
+#      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092"
+#      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092"
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#    ports:
+#      - "9092:9092"
+#    profiles:
+#      - core
+
+#volumes:
+#  - db: {}
+

@@ -2,13 +2,16 @@ spring:
   application:
     name: cuentasMovimientos
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=utf8
-    username: postgres
-    password: postgres
-    driver-classname: org.postgresql.Driver
-    hikari:
-      pool-size: 10
-      connection-timeout: 60000 # Adjust timeout as needed
+      url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=utf8
+      username: postgres
+      password: postgres
+      driver-classname: org.postgresql.Driver
+#      url: ${SPRING_DATASOURCE_URL}
+#      username: ${SPRING_DATASOURCE_USERNAME}
+#      password: ${SPRING_DATASOURCE_PASSWORD}
+      hikari:
+        pool-size: 10
+        connection-timeout: 60000 # Adjust timeout as needed
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect

@@ -2,9 +2,9 @@ spring:
   application:
     name: informacionPersonal
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=utf8
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-classname: org.postgresql.Driver
     hikari:
       pool-size: 10 # Adjust pool size as needed
