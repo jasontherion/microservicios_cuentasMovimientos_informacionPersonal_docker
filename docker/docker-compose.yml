@@ -1,12 +1,4 @@
-#version: "3.8"
-
-networks:
-  app-network:
-    name: banca_network
-    driver: bridge # se asigna este porque es dinamico al generar las ip para varios servicios existe host=> solo para un servicio
-    ipam:
-      driver: default
-
+version: "3.8"
 
 services:
   postgres:
@@ -96,3 +88,9 @@ services:
 #volumes:
 #  - db: {}
 
+networks:
+  app-network:
+    name: banca_network
+    driver: bridge # se asigna este porque es dinamico al generar las ip para varios servicios existe host=> solo para un servicio
+    ipam:
+      driver: default
