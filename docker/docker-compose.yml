@@ -25,6 +25,20 @@ services:
       timeout: 5s
       retries: 5
 
+  servidor-monitoreo:
+    build: ../servidor-monitoreo
+    ports:
+      - "9099:9099" # Mapeo el puerto del contenedor al host
+    container_name: artefacto_servidor_monitoreo
+    restart: always
+    profiles:
+      - core
+    networks:
+      app-network:
+        aliases:
+          - banca_network_monitoreo
+
+
   informacion-personal:
     build: ../informacionPersonal # Ruta al Dockerfile del microservicio informacionPersonal
     ports:
@@ -33,6 +47,7 @@ services:
     restart: always # se reinicia siempre que alla un fallo en el contenedor tambien posee "no", "on-failure"=> si hay falla resetea,  "unless-stop=> siempre exepto cuando se reinicia manualmente"
     depends_on: # Esperar a que la base de datos esté lista antes de iniciar
       - postgres
+      - servidor-monitoreo
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?useUnicode=true&characterEncoding=utf8 # Conectar a la base de datos en el contenedor 'postgres'
       SPRING_DATASOURCE_USERNAME: postgres
@@ -51,6 +66,7 @@ services:
     depends_on:
       - postgres
       - informacion-personal
+      - servidor-monitoreo
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?useUnicode=true&characterEncoding=utf8 # Conectar a la base de datos en el contenedor 'postgres'
       SPRING_DATASOURCE_USERNAME: postgres

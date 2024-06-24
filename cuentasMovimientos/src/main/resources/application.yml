@@ -1,4 +1,8 @@
 spring:
+  boot:
+    admin:
+      client:
+         url: http://localhost:9099/
   application:
     name: cuentasMovimientos
   datasource:
@@ -25,3 +29,11 @@ spring:
         org:
           hibernate:
             type: trace
+server:
+  port:
+    8121
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
