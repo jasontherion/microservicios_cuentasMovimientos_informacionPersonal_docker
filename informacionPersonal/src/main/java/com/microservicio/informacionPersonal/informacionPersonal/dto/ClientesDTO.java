@@ -1,6 +1,8 @@
 package com.microservicio.informacionPersonal.informacionPersonal.dto;
 
 import lombok.*;
+import reactor.core.CoreSubscriber;
+import reactor.core.publisher.Mono;
 
 
 @Builder
@@ -8,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ClientesDTO {
+public class ClientesDTO extends Mono<ClientesDTO> {
 
     private Long clienteId;
 
@@ -18,4 +20,12 @@ public class ClientesDTO {
     private Boolean estado;
 
     private PersonasDTO persona;
+
+    /**
+     * @param coreSubscriber
+     */
+    @Override
+    public void subscribe(CoreSubscriber<? super ClientesDTO> coreSubscriber) {
+
+    }
 }

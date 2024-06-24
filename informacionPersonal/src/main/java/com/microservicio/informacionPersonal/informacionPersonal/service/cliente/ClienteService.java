@@ -5,13 +5,15 @@ import com.microservicio.informacionPersonal.informacionPersonal.dto.ClientesDTO
 import com.microservicio.informacionPersonal.informacionPersonal.dto.EstadoDto;
 import com.microservicio.informacionPersonal.informacionPersonal.dto.RespuestaDTO;
 import org.springframework.http.ResponseEntity;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface ClienteService {
 
-    ResponseEntity<RespuestaDTO> listarClientes();
-    ResponseEntity<ClientesDTO> clienteId(Long Id);
-    ResponseEntity<RespuestaDTO> crearClientes(ClienteContenedorDTO clienteContenedorDTO);
-    ResponseEntity<RespuestaDTO> actualizarClientes(Long id , ClienteContenedorDTO clienteContenedorDTO);
+    Flux<ClientesDTO>  listarClientes();
+    Mono<ClientesDTO> clienteId(Long Id);
+    ResponseEntity<Flux<RespuestaDTO>> crearClientes(ClienteContenedorDTO clienteContenedorDTO);
+    ResponseEntity<Flux<RespuestaDTO>> actualizarClientes(Long id , ClienteContenedorDTO clienteContenedorDTO);
 
-    ResponseEntity<RespuestaDTO> desabilitarClientes(Long id, EstadoDto estado);
+    ResponseEntity<Flux<RespuestaDTO>> desabilitarClientes(Long id, EstadoDto estado);
 }

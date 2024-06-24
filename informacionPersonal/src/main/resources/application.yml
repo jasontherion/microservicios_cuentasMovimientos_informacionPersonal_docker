@@ -2,10 +2,14 @@ spring:
   application:
     name: informacionPersonal
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=utf8
+    username: postgres
+    password: postgres
     driver-classname: org.postgresql.Driver
+#    url: ${SPRING_DATASOURCE_URL}
+#    username: ${SPRING_DATASOURCE_USERNAME}
+#    password: ${SPRING_DATASOURCE_PASSWORD}
+#    driver-classname: org.postgresql.Driver
     hikari:
       pool-size: 10 # Adjust pool size as needed
       connection-timeout: 60000 # Adjust timeout as needed
@@ -24,6 +28,10 @@ spring:
 
 
 server:
+  port: 8022
   context-path: /clientes
   servlet:
     context-path: /clientes
+
+logging:
+   path: /Users/jasontherion/Desktop/devOps-course/Microservicios-spring-boot/microservicios-jeyson-correa

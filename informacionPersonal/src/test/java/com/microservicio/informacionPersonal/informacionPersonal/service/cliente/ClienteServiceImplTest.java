@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,17 +55,17 @@ class ClienteServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
-//    @Test
-//    void listarClientes() {
-//        List<Clientes> listClientes = new ArrayList<>();
-//        listClientes.add(cliente);
-//        when(repository.findAll()).thenReturn(listClientes);
-//
-//        ResponseEntity<RespuestaDTO> result = clienteServiceImpl.listarClientes();
-//        assertEquals(HttpStatus.OK, result.getStatusCode());
-//        assertEquals(listClientes.size(),result.getBody().getData().size());
-//
-//    }
+    @Test
+    void listarClientes() {
+        List<Clientes> listClientes = new ArrayList<>();
+        listClientes.add(cliente);
+        when(repository.findAll()).thenReturn(listClientes);
+
+        ResponseEntity<Mono<RespuestaDTO>> result = clienteServiceImpl.listarClientes();
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(listClientes.size(),result.getBody().blockOptional().get().getData().size());
+
+    }
 
     @Test
     void clienteId() {

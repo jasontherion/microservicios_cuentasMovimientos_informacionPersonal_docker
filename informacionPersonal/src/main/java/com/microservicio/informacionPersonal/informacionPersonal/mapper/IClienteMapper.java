@@ -6,6 +6,7 @@ import com.microservicio.informacionPersonal.informacionPersonal.model.Clientes;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 

@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.List;
+
 
 
 @Builder

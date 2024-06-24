@@ -19,6 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -42,10 +45,10 @@ public class ClienteServiceImpl implements ClienteService {
      */
     @Transactional(readOnly = true)
     @Override
-    public ResponseEntity<RespuestaDTO> listarClientes() {
+    public Flux<ClientesDTO> listarClientes() {
         try {
             List<Clientes> list = repository.findAll().stream().filter(r->Boolean.TRUE.equals(r.getEstado())).collect(Collectors.toList());
-            return new ResponseEntity<>(RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.RESPUESTA_CONSULTA,ModulosEnum.CLIENTES)).data( mapper.listaClientesAListaClientesDto(list)).build(), HttpStatus.OK);
+            return (Flux<ClientesDTO>) mapper.listaClientesAListaClientesDto(list);
         }catch (Exception e){
             log.error("Error en listar Clientes " + e);
             throw  new RuntimeException(String.format(ConstatesMesajes.ERROR_SERVIDOR, ModulosEnum.CLIENTES));
@@ -58,14 +61,14 @@ public class ClienteServiceImpl implements ClienteService {
      */
     @Transactional(readOnly = true)
     @Override
-    public ResponseEntity<ClientesDTO> clienteId(Long Id)  {
+    public Mono<ClientesDTO> clienteId(Long Id)  {
         try {
             Optional<Clientes> object = repository.findById(Id).filter(r->Boolean.TRUE.equals(r.getEstado()));
             if(!object.isPresent()){
                 throw new NoSuchElementException(String.format(ConstatesMesajes.ERROR_NO_REGISTROS));
             }
 
-            return new ResponseEntity<>(mapper.clientesAClientesDto(object.get()), HttpStatus.OK);
+            return mapper.clientesAClientesDto(object.get());
         } catch (NoSuchElementException e){
             throw new NoSuchElementException(e);
 
@@ -81,7 +84,7 @@ public class ClienteServiceImpl implements ClienteService {
      */
     @Transactional
     @Override
-    public ResponseEntity<RespuestaDTO> crearClientes(ClienteContenedorDTO clienteContenedorDTO) {
+    public ResponseEntity<Flux<RespuestaDTO>> crearClientes(ClienteContenedorDTO clienteContenedorDTO) {
         try {
             Personas nuevaPersona = personaMapper.personasDtoAPersonas(clienteContenedorDTO.getPersonasDto()); // Convertimos a Personas
             personasRepository.save(nuevaPersona); // Guardamos la persona primero
@@ -89,7 +92,7 @@ public class ClienteServiceImpl implements ClienteService {
             Clientes nuevoCliente = clientePersonaMapper.clienteContenedorDTOAClientes(clienteContenedorDTO);
             nuevoCliente.setPersonas(nuevaPersona); // Asignamos la persona guardada al cliente
             repository.saveAndFlush(nuevoCliente);
-            return new ResponseEntity<>(RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.CREACION,clienteContenedorDTO.getClientesDto())).build(), HttpStatus.OK);
+            return new ResponseEntity<Flux<RespuestaDTO>>((MultiValueMap<String, String>) RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.CREACION,clienteContenedorDTO.getClientesDto())).build(), HttpStatus.OK);
         }catch (Exception e){
             log.error("Error en listar Clientes " + e);
             throw  new RuntimeException(String.format(ConstatesMesajes.ERROR_SERVIDOR, ModulosEnum.CLIENTES));
@@ -103,7 +106,7 @@ public class ClienteServiceImpl implements ClienteService {
      */
     @Transactional
     @Override
-    public ResponseEntity<RespuestaDTO> actualizarClientes(Long id, ClienteContenedorDTO clienteContenedorDTO) {
+    public ResponseEntity<Flux<RespuestaDTO>> actualizarClientes(Long id, ClienteContenedorDTO clienteContenedorDTO) {
         try {
             // 1. Manejar creación si el cliente no existe
             Clientes clienteActualizar = repository.findById(id).filter(r-> Boolean.TRUE.equals(r.getEstado()))
@@ -133,7 +136,7 @@ public class ClienteServiceImpl implements ClienteService {
             actualizado.setClienteId(id);
             actualizado.setPersonas(persona);
             repository.saveAndFlush(actualizado);
-            return new ResponseEntity<>(RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.ACTUALIZAR, ModulosEnum.CLIENTES)).build(), HttpStatus.OK);
+            return new ResponseEntity<Flux<RespuestaDTO>>((MultiValueMap<String, String>) RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.ACTUALIZAR, ModulosEnum.CLIENTES)).build(), HttpStatus.OK);
         }catch (Exception e){
             log.error("Error en listar Clientes "+e);
             throw  new RuntimeException(String.format(ConstatesMesajes.ERROR_SERVIDOR, ModulosEnum.CLIENTES));
@@ -146,7 +149,7 @@ public class ClienteServiceImpl implements ClienteService {
      */
     @Transactional
     @Override
-    public ResponseEntity<RespuestaDTO> desabilitarClientes(Long id, EstadoDto estado) {
+    public ResponseEntity<Flux<RespuestaDTO>> desabilitarClientes(Long id, EstadoDto estado) {
         try {
             Optional<Clientes> object = repository.findById(id);
             if(!object.isPresent()){
@@ -155,7 +158,7 @@ public class ClienteServiceImpl implements ClienteService {
             Clientes clienteActualizar = object.get();
             clienteActualizar.setEstado(estado.getEstado());
             repository.save(clienteActualizar);
-            return new ResponseEntity<>(RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.DESHABILITAR, ModulosEnum.CLIENTES,id)).build(), HttpStatus.OK);
+            return new ResponseEntity<Flux<RespuestaDTO>>((MultiValueMap<String, String>) RespuestaDTO.builder().mensage(String.format(ConstatesMesajes.DESHABILITAR, ModulosEnum.CLIENTES,id)).build(), HttpStatus.OK);
         }catch (NoSuchElementException e){
             throw new NoSuchElementException(e);
 
